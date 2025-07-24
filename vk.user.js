@@ -3,7 +3,7 @@
 // @namespace   Violentmonkey Scripts
 // @match       https://vk.com/im*
 // @grant       none
-// @version     1.1
+// @version     1.2
 // @author      seneal
 // ==/UserScript==
 
@@ -31,15 +31,16 @@ const getClass = (name) => `.${name}`;
 
 const handleBlurElements = (user) => {
   const elements = document.querySelectorAll(`[data-blur-user="${user}"]`);
+
   elements.forEach((el) => el.classList.add("blur-text"));
 
   elements.forEach((el) => {
     el.addEventListener("mouseenter", () => {
-      elements.forEach((e) => e.classList.remove("blur-text"));
+      elements.forEach((e) => e.classList.add("blur-text-hover"));
     });
 
     el.addEventListener("mouseleave", () => {
-      elements.forEach((e) => e.classList.add("blur-text"));
+      elements.forEach((e) => e.classList.remove("blur-text-hover"));
     });
   });
 };
@@ -120,7 +121,7 @@ const observers = [
 
 const injectStyles = () => {
   const style = document.createElement("style");
-  style.textContent = `.blur-text {filter: blur(${blurStrength}px);cursor: pointer;transition: filter 0.3s ease;}.blur-text:hover {filter: none;transition: filter 0.3s ease;}`;
+  style.textContent = `.blur-text {filter: blur(${blurStrength}px);cursor: pointer;transition: filter 0.3s ease;}.blur-text-hover {filter: none !important;}`;
 
   document.head.appendChild(style);
 };
