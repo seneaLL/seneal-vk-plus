@@ -326,12 +326,14 @@ const startObserver = (selector, fn) => {
     mutations.forEach((mutation) => {
       if (mutation.type === "childList" || mutation.type === "attributes") {
         const nearest = mutation.target.querySelector(selector);
+
         if (nearest)
           fn(nearest);
 
         mutation.addedNodes.forEach((node) => {
           if (node.nodeType === Node.ELEMENT_NODE) {
             const nested = node.querySelector(selector);
+
             if (nested)
               fn(nested);
           }
@@ -357,7 +359,6 @@ const handleConversationList = (target) => {
 
   for (const message of messages)
     handleConversationListMessage(message);
-
 };
 
 const observers = [
